@@ -1,0 +1,18 @@
+# Build output
+build/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# TensorRT engines only work on the device and TensorRT version that built them (see README, Model setup)
+*.engine
+*.log
+
+# Camera captures and run output
+docs/argus_*.jpg
+results/*
+!results/.gitkeep
+export/*
+!export/.gitkeep
