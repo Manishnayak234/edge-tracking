@@ -42,6 +42,8 @@ Developed and tested on:
 | Camera | Sony IMX219 on CSI (`/dev/video0`), sensor mode 4: 1280×720 @ 60 fps |
 | Build tools | CMake ≥ 3.18 (tested 3.22), GCC 11 |
 
+![Hardware setup: IMX219 camera over MIPI CSI-2 to the Jetson Orin Nano Super, which sends sweep and stop commands over USB serial to an Arduino driving an SG90 servo on D9; a PC connects over SSH](docs/images/setup.svg)
+
 The build also needs the GStreamer development packages (`gstreamer-1.0`, `gstreamer-app-1.0`, `gstreamer-video-1.0`) and the Jetson Multimedia API headers in `/usr/src/jetson_multimedia_api` (for `NvBufSurface`).
 
 Exporting the model needs a separate machine (or venv) with Python and `ultralytics`, because PyTorch is not installed on the Jetson (see [Model setup](#model-setup)).
@@ -60,9 +62,9 @@ src/
   telemetry/              per-stage timings, counters, end-to-end latency
 apps/                     benchmarks, checks and viewers (see below)
 scripts/                  on_display.sh, preview.sh
-tools/                    bytetrack_reference.py (runs on the PC, compares with Ultralytics)
+tools/                    bytetrack_reference.py (compares with Ultralytics), plot_telemetry.py (charts); run on the PC
 models/                   ONNX model, class names, reference data (the TensorRT engine is built here, not committed)
-docs/                     camera baseline notes and captures
+docs/                     camera baseline notes, README images (images/), benchmark logs (perf/)
 tracks/                   detection/track files from the tracker checks
 configs/ tests/ export/ results/   reserved, currently empty
 ```
@@ -124,7 +126,11 @@ The camera can only be used by one program at a time. Stop a running preview or 
 ./scripts/on_display.sh ./build/pipeline_run 20 view /tmp/last.png   # save the last frame on exit
 ```
 
-Arguments: `pipeline_run [seconds] [view|headless|spin] [snapshot.png]`. `spin` runs headless with CUDA spin-waiting instead of blocking sync, for comparison.
+Arguments: `pipeline_run [seconds] [view|headless|spin] [snapshot.png]`. `spin` runs headless with CUDA spin-waiting instead of blocking sync, for comparison. A snapshot works in every mode: headless runs keep a copy of the latest frame and draw the tracks on it once at exit, so no display is needed:
+
+```bash
+./build/pipeline_run 10 headless /tmp/snapshot.jpg      # the last frame, with tracks and the telemetry line
+```
 
 Example telemetry line:
 
@@ -303,6 +309,30 @@ Measured on the Jetson Orin Nano Super, MAXN_SUPER, default clock governors, 128
 | Process CPU | ~40% of one core; ~33% of that is NVIDIA's Argus camera plugin |
 
 **GPU clock matters most.** The GPU governor (`nvhost_podgov`) keeps the GPU at **306–408 MHz** of its 1020 MHz maximum, because the load is light, and inference time follows that choice. For the lowest and most stable latency, lock the clocks with `sudo jetson_clocks`. This uses more power, and the setting resets on reboot.
+
+### Charts
+
+From a 30 s headless run with default clocks ([raw log](docs/perf/pipeline_run_30s.txt)), drawn with `tools/plot_telemetry.py`:
+
+| 30 s run | Result |
+|---|---|
+| Output | 59.2 fps (1,775 results from 1,778 camera frames) |
+| Capture → tracks latency | mean 14.9 ms, p50 14.6 ms, p99 15.3 ms |
+| Dropped frames | 1 by the camera and 3 at ingest, all in the first second (startup) |
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/latency_breakdown-dark.svg">
+  <img alt="Mean time per stage: capture and preprocess 1.1 ms, TensorRT with decode and NMS 10.8 ms, ByteTrack 0.07 ms, camera delivery and hand-offs 3.0 ms; 14.9 ms in total" src="docs/images/latency_breakdown-light.svg" width="820">
+</picture>
+
+Inference is most of the latency. The ~3 ms not covered by a stage is the time from the frame's capture timestamp until it reaches the capture thread (ISP, VIC conversion, appsink), plus the hand-offs between threads.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/latency_timeline-dark.svg">
+  <img alt="Per-second end-to-end latency over 30 s: the mean stays at 14.5 to 14.7 ms and the p99 at 14.6 to 15.3 ms, with one spike to 18.5 ms" src="docs/images/latency_timeline-light.svg" width="820">
+</picture>
+
+To chart your own run: `./build/pipeline_run 30 > run.txt` on the Jetson, then `python tools/plot_telemetry.py run.txt docs/images` on a PC with matplotlib.
 
 ## Verification
 

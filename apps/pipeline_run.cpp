@@ -3,7 +3,8 @@
 //   seconds:  0 = until Ctrl+C (or q in the window)
 //   view:     draw tracks in a window (start through scripts/on_display.sh over SSH)
 //   spin:     headless, with CUDA spin-waiting instead of blocking sync (for comparison)
-//   snapshot.png: with view, the last shown frame is saved there on exit
+//   snapshot.png: the last frame, with tracks drawn, is saved there on exit (any mode; headless
+//                 keeps a copy of the latest frame and draws it once, so no display is needed)
 // Run from the project root.
 
 #include "edge_tracking/pipeline/pipeline.hpp"
@@ -63,23 +64,30 @@ int main(int argc, char** argv) {
     std::signal(SIGINT, on_signal);
 
     pl::PipelineConfig config;
-    config.keep_image = show;
+    config.keep_image = show || snapshot_path;
     config.blocking_sync = !(argc > 2 && std::strcmp(argv[2], "spin") == 0);
     const std::vector<std::string> names = edge_tracking::postprocess::load_class_names("models/coco_names.txt");
 
     // Sink state, only touched on the sink thread (and by main after stop() has joined it).
     view::TrailHistory trails(45, config.tracker.track_buffer);
     cv::Mat bgr;
+    cv::Mat last_nv12;  // headless snapshot: latest frame and its tracks, drawn once on exit
+    std::vector<edge_tracking::tracking::Track> last_tracks;
     bool window_open = false;
     std::string status = "starting";
     std::mutex status_mutex;
 
     pl::Pipeline pipeline(config);
     auto on_result = [&](const pl::FrameResult& r) {
-        if (!show) return;
+        if (!show && !snapshot_path) return;
         const cv::Mat nv12(r.height * 3 / 2, r.width, CV_8UC1, const_cast<uint8_t*>(r.nv12));
-        cv::cvtColor(nv12, bgr, cv::COLOR_YUV2BGR_NV12);  // BT.601: slight color shift, fine for viewing
         trails.update(r.tracks);
+        if (!show) {
+            nv12.copyTo(last_nv12);
+            last_tracks = r.tracks;
+            return;
+        }
+        cv::cvtColor(nv12, bgr, cv::COLOR_YUV2BGR_NV12);  // BT.601: slight color shift, fine for viewing
         view::draw_tracks(bgr, r.tracks, trails, names);
         {
             std::lock_guard<std::mutex> lock(status_mutex);
@@ -133,9 +141,12 @@ int main(int argc, char** argv) {
     if (!failure.empty()) std::fprintf(stderr, "pipeline error: %s\n", failure.c_str());
     print_totals(totals);
 
-    if (show) {
-        if (snapshot_path && !bgr.empty() && cv::imwrite(snapshot_path, bgr)) std::printf("saved %s\n", snapshot_path);
-        cv::destroyAllWindows();
+    if (!show && !last_nv12.empty()) {  // the sink thread has been joined, so its state is safe to read
+        cv::cvtColor(last_nv12, bgr, cv::COLOR_YUV2BGR_NV12);
+        view::draw_tracks(bgr, last_tracks, trails, names);
+        view::draw_status(bgr, status);
     }
+    if (snapshot_path && !bgr.empty() && cv::imwrite(snapshot_path, bgr)) std::printf("saved %s\n", snapshot_path);
+    if (show) cv::destroyAllWindows();
     return failure.empty() ? 0 : 1;
 }

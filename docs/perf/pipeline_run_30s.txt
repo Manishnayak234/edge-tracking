@@ -1,0 +1,64 @@
+GST_ARGUS: Creating output stream
+CONSUMER: Waiting until producer is connected...
+GST_ARGUS: Available Sensor modes :
+GST_ARGUS: 3280 x 2464 FR = 21.000000 fps Duration = 47619048 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 3280 x 1848 FR = 28.000001 fps Duration = 35714284 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 1920 x 1080 FR = 29.999999 fps Duration = 33333334 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 1640 x 1232 FR = 29.999999 fps Duration = 33333334 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 1280 x 720 FR = 59.999999 fps Duration = 16666667 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: Running with following settings:
+   Camera index = 0 
+   Camera mode  = 4 
+   Output Stream W = 1280 H = 720 
+   seconds to Run    = 0 
+   Frame Rate = 59.999999 
+GST_ARGUS: Setup Complete, Starting captures for 0 seconds
+GST_ARGUS: Starting repeat capture requests.
+CONSUMER: Producer has connected; continuing.
+in  45.0 fps, out  41.0 fps | capture 0.93 | infer 12.27 (p99 87.50) | track 0.032 | sink 0.00 ms | latency 26.0 ms (p99 114.7) | dropped: camera 1, ingest 3, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.07 | infer 10.72 (p99 11.13) | track 0.047 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  59.0 fps | capture 1.05 | infer 10.72 (p99 10.79) | track 0.050 | sink 0.00 ms | latency 14.6 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.05 | infer 10.71 (p99 10.77) | track 0.051 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.06 | infer 10.73 (p99 11.15) | track 0.054 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.06 | infer 10.73 (p99 11.18) | track 0.051 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.04 | infer 10.73 (p99 11.14) | track 0.057 | sink 0.00 ms | latency 14.7 ms (p99 15.3) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  59.0 fps | capture 1.05 | infer 10.72 (p99 11.13) | track 0.061 | sink 0.00 ms | latency 14.6 ms (p99 15.3) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.04 | infer 10.73 (p99 11.13) | track 0.071 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.04 | infer 10.71 (p99 10.76) | track 0.074 | sink 0.00 ms | latency 14.5 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.04 | infer 10.71 (p99 11.16) | track 0.078 | sink 0.00 ms | latency 14.5 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  59.0 fps | capture 1.07 | infer 10.72 (p99 11.11) | track 0.079 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.05 | infer 10.72 (p99 11.15) | track 0.072 | sink 0.00 ms | latency 14.6 ms (p99 15.3) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.09 | infer 10.72 (p99 11.14) | track 0.071 | sink 0.00 ms | latency 14.6 ms (p99 15.3) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.07 | infer 10.72 (p99 10.82) | track 0.071 | sink 0.00 ms | latency 14.7 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.05 | infer 10.70 (p99 10.93) | track 0.076 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  59.0 fps | capture 1.04 | infer 10.70 (p99 11.21) | track 0.072 | sink 0.00 ms | latency 14.6 ms (p99 15.1) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.06 | infer 10.73 (p99 11.30) | track 0.080 | sink 0.00 ms | latency 14.6 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.07 | infer 10.73 (p99 10.77) | track 0.087 | sink 0.00 ms | latency 14.6 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.07 | infer 10.72 (p99 10.79) | track 0.082 | sink 0.00 ms | latency 14.6 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  59.0 fps | capture 1.06 | infer 10.72 (p99 10.84) | track 0.075 | sink 0.00 ms | latency 14.6 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.03 | infer 10.70 (p99 11.11) | track 0.080 | sink 0.00 ms | latency 14.5 ms (p99 15.1) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.07 | infer 10.76 (p99 11.34) | track 0.076 | sink 0.00 ms | latency 14.7 ms (p99 18.5) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.03 | infer 10.70 (p99 10.78) | track 0.077 | sink 0.00 ms | latency 14.5 ms (p99 14.7) | dropped: camera 0, ingest 0, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.03 | infer 10.70 (p99 10.83) | track 0.080 | sink 0.00 ms | latency 14.5 ms (p99 14.7) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  59.0 fps | capture 1.03 | infer 10.70 (p99 11.16) | track 0.085 | sink 0.00 ms | latency 14.5 ms (p99 15.2) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.03 | infer 10.70 (p99 10.81) | track 0.088 | sink 0.00 ms | latency 14.5 ms (p99 14.6) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.07 | infer 10.74 (p99 11.18) | track 0.100 | sink 0.00 ms | latency 14.6 ms (p99 15.3) | dropped: camera 0, ingest 0, sink 0
+in  59.0 fps, out  60.0 fps | capture 1.06 | infer 10.72 (p99 10.83) | track 0.100 | sink 0.00 ms | latency 14.7 ms (p99 14.8) | dropped: camera 0, ingest 0, sink 0
+in  60.0 fps, out  60.0 fps | capture 1.08 | infer 10.79 (p99 11.19) | track 0.096 | sink 0.00 ms | latency 14.7 ms (p99 15.3) | dropped: camera 0, ingest 0, sink 0
+GST_ARGUS: Cleaning up
+CONSUMER: Done Success
+GST_ARGUS: Done Success
+
+summary over 30.0 s
+  camera frames 1778 (59.3 fps), results 1775 (59.2 fps)
+  dropped: by camera 1, at ingest (no free slot) 3, at sink (sink busy) 0
+  capture               mean   1.051 ms, p50   1.048, p99   1.254, max   1.546  (1775 samples)
+  inference             mean  10.755 ms, p50  10.707, p99  11.149, max  87.505  (1775 samples)
+  tracking              mean   0.073 ms, p50   0.074, p99   0.113, max   0.149  (1775 samples)
+  sink                  mean   0.001 ms, p50   0.001, p99   0.002, max   0.030  (1775 samples)
+  latency (end to end)  mean  14.856 ms, p50  14.573, p99  15.267, max 114.662  (1775 samples)
