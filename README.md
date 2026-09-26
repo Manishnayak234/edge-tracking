@@ -11,7 +11,7 @@ IMX219 ──► Argus ISP ──► VIC (pitch-linear) ──► CUDA preproces
           nvarguscamerasrc   nvvidconv (NVMM)     letterbox 640×640     FP16, CUDA graph    GPU + CPU         CPU
 ```
 
-![Edge Tracking Architecture](docs/images/architecture.png)
+![Edge Tracking Architecture](docs/Architecture.png)
 
 ## Contents
 
